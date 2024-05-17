@@ -1,6 +1,6 @@
 # On the optimality of timer based caching policies for decreasing hazard rates.
 
-[## Andres Ferragut - Universidad ORT Uruguay.](https://aferragu.github.io.) 
+##[Andres Ferragut - Universidad ORT Uruguay.](https://aferragu.github.io.) 
 
 ### Abstract:
 Consider a local memory system receiving requests from a given catalog: the typical caching objective is to maximize its hit rate, i.e. the number of items that are served directly from the cache. Two main alternatives have been studied: replacement policies (such as LRU) and timer-based policies (TTL).
