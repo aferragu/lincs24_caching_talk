@@ -1224,16 +1224,11 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 \begin{frame}{A law of large numbers for the threshold}
 	
-	Assume further that the cache has capacity $C=cN$ with $0<c<1$ is the fraction of the catalog that can be stored.
-
-	\pause
-
-	Then, the optimal policy threshold $\theta^*_N(0)$ is the random variable:
+	Assume further that the cache has capacity $C=cN$ with $0<c<1$ is the fraction of the catalog that can be stored. Then, the optimal policy threshold $\theta^*_N(0)$ is the random variable:
 	\begin{equation*}
 		\theta^*_N: \; \sum_{i=1}^N \ind{\{X_i\leqslant \theta^*_N\}} = (1-c)N
 	\end{equation*}
 	or equivalently $\theta^*_N$ is such that $\hat{G}_N(\theta^*_N) = 1-c$.
-
 
 	\pause \vfill
 
@@ -1572,25 +1567,36 @@ The question now is not \alert{how long we should remember something}, but inste
 
 	\begin{theorem}[F', Carrasco, Paganini]
 
-		In the scaling regime considered earlier, for renewal processes with IHR, the \alert{timer based pre-fetching policy} is asymptotically optimal.
+		In the scaling regime considered earlier, for renewal processes with IHR, the \alert{timer based pre-fetching policy} is also asymptotically optimal within the class of causal policies.
 	\end{theorem}
 	\vfill
 	\alert{Idea:} as before, prove that the thresholds are the same in the limit.
 
 \end{frame}
 
+\begin{frame}{An example}
+	
+	Erlang ($k=5$) interarrival times, Zipf popularities, varying $\beta$...
+
+	\vfill
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figuras/comparison.pdf}
+\end{center}
+
+\vfill
+\end{frame}
 \section{Conclusions}
 
 \begin{frame}{Final remarks}
 	
 	\begin{myitem}[2em]
-		\item The main result characterizes the optimal policy completely in the large-scale scenario.
+		\item The main result characterizes the optimal policy completely in the large-scale scenario, as a fixed threshold policy.
 		
-		\item For particular distributions of interest (e.g. Pareto requests, Zipf popularities) the threshold can be computed explicitly.
+		\item This enables to prove that \alert{TTL caching} is asymptotically optimal for DHR inter-arrival times
 		
-		\item Once the threshold is computed, we can compute the asymptotic hit probability.
+		\item The new \alert{timer based pre-fetching} policy is also asymptotically optimal in the IHR case. 
 		
-		\item Therefore, we have a computable absolute performance bound in the limit.
 		\pause
 		\item There is much more to do!
 		
