@@ -567,7 +567,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 \end{frame}
 
 \begin{frame}{Stochastic intensity}
-	Consider a simple stationary point process $N$ with intensity $\lambda$, defined in some probability space $(\Omega, \mathcal{F},P)$. Let some filtration $\{\mathcal{F}_t\}_{t\in\mathbb{R}}$ be a \alert{history} of the process.
+	Consider a simple stationary point process $\Phi$ with intensity $\lambda$, defined in some probability space $(\Omega, \mathcal{F},P)$. Let some filtration $\{\mathcal{F}_t\}_{t\in\mathbb{R}}$ be a \alert{history} of the process.
 
 	\bigskip
 
@@ -575,7 +575,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 		The random process $\lambda(t)\geqslant 0$ is a \alert{stochastic intensity} for the history $\mathcal{F}_t$ iff it is a.s. locally integrable, $\mathcal{F}_t-$adapted and:
 		\begin{equation*}
-			\E{N((a,b])\mid \mathcal{F}_a} = \E{\left.\int_a^b \lambda(t)dt \right| \mathcal{F}_a}
+			\E{\Phi((a,b])\mid \mathcal{F}_a} = \E{\left.\int_a^b \lambda(t)dt \right| \mathcal{F}_a}
 		\end{equation*}
 		for all $a,b\in \mathbb{R}$.
 	\end{block}
@@ -587,7 +587,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	
 	\alert{Local interpretation:}
 		\begin{equation*}
-			E[N((t,t+h])\mid \mathcal{F}_t] = \lambda(t)h + o(h) \quad P-a.s.,
+			E[\Phi((t,t+h])\mid \mathcal{F}_t] = \lambda(t)h + o(h) \quad P-a.s.,
 		\end{equation*}
 	
 	So $\lambda(t)$ acts as a \alert{local} notion of intensity based on previous history.
@@ -595,29 +595,33 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\pause \vfill
 	\alert{Martingale interpretation:}
 		\begin{equation*}
-			M_a(t) = N(t) - N(a) - \int_a^t \lambda(s)ds
+			M_a(t) = \Phi(t) - \Phi(a) - \int_a^t \lambda(s)ds
 		\end{equation*} 
 		is a local $(P,\mathcal{F}_t)$ martingale for any $a\in\mathbb{R}$.
 	
-		\vfill
+	% 	\vfill
 
-	Namely, $A(t) = N(a) + \int_a^t \lambda(s)ds$ is the \alert{compensator} of the counting process.
+	% Namely, $A(t) = N(a) + \int_a^t \lambda(s)ds$ is the \alert{compensator} of the counting process.
 
 \end{frame}
 
 \begin{frame}{Stochastic intensity of a Poisson process}
 
 	\begin{myitem}[2em]
-		\item If $N(t)$ is a Poisson process, then we know that
+		\item If $\Phi(t)$ is a Poisson process, then we know that
 		\begin{equation*}
-			M(t) = N(t) - \lambda t = N(t) - \int_0^t \lambda dt
+			M(t) = \Phi(t) - \lambda t = \Phi(t) - \int_0^t \lambda dt
 		\end{equation*}
 		is a martingale, so the stochastic intensity of a Poisson process is just $\lambda(t)\equiv \lambda$.
 
-		\pause
-
-		\item In fact, this \alert{characterizes} the Poisson process. The stochastic intensity $\lambda(t)$ is \alert{deterministic} if and only if $N$ is a Poisson process of (possible time-varying) intensity $\lambda(t)$.
+		% \item In fact, this \alert{characterizes} the Poisson process. The stochastic intensity $\lambda(t)$ is \alert{deterministic} if and only if $N$ is a Poisson process of (possible time-varying) intensity $\lambda(t)$.
 	\end{myitem}
+
+	\pause \vfill
+	\centering
+	The poisson process is the \alert{``white noise''} of point processes.
+
+	\vfill
 \end{frame}
 
 \begin{frame}{Stochastic intensity}{A local notion of intensity...}
@@ -977,7 +981,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 \begin{frame}{Back to the Poisson case}
 
 	\begin{myitem}
-		\item Assume the $N_i$ are Poisson processes of intensities $\lambda_i$.
+		\item Assume the $\Phi_i$ are Poisson processes of intensities $\lambda_i$.
 		\item We take $\lambda_1>\lambda_2>\ldots$ as the popularities.
 		\item The total request process is also Poisson of intensity $\sum_i\lambda_i$.
 		\item In that case, the optimal policy is:
@@ -991,9 +995,9 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\alert{Conclusion:} under Poisson arrivals, statically keeping the most popular objects is optimal (compare to the IRM before).
 \end{frame}
 
-\begin{frame}{The renewal case}
+\begin{frame}{The Renewal case}
 	\begin{myitem}[2em]
-		\item If now the $N_i$ are renewal processes of (decreasing) intensities $\lambda_i$.
+		\item If now the $\Phi_i$ are renewal processes of (decreasing) intensities $\lambda_i$.
 		\item The total request process is no longer renewal, but its intensity is again $\sum_i\lambda_i$.
 		\item Since $\lambda_i(t) = \eta_i(t-T^*_i(t))$, the optimal policy is:
 		\vspace{1em}
