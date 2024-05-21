@@ -1052,66 +1052,34 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	¿What is the large scale behavior of $\theta(t)$ in steady state?.
 \end{frame}
 
-% \begin{frame}{A useful lemma}
-	
-% 	\begin{columns}
-% 		\begin{column}{0.5\textwidth}
-% 			What's the stochastic intensity \alert{distribution} in steady state?			
-% 		\end{column}
-% 		\begin{column}{0.5\textwidth}
-% 			\begin{tikzpicture}
-% 				\begin{axis}[xlabel=$t$,
-% 					ymin = -2,
-% 					ymax = 3,
-% 					xmin = -.3,
-% 					xmax = 4.5,
-% 					xlabel style = {at={(axis cs:4.5,0)},anchor=north west},
-% 					y axis line style={draw=none},
-% 					x axis line style={->, thick},
-% 					ytick=\empty,
-% 					axis x line*=middle,
-% 					axis y line*=left,
-% 					width=7.5cm,
-% 					height=5cm,
-% 					xtick={0,4},
-% 					ytick={.8},
-% 					xticklabels={$\tau_0$,$\tau_1$},
-% 					yticklabels={$x$},
-% 					]
-% 					\addplot[domain=0:4,thick,azulcito] {2/(1+x)} node[midway, yshift=10, xshift=3,anchor=south east]{$\eta(t-\tau_0)$};
-% 					\addplot[domain=0:4,dashed] {0.8};
-% 					\fill[color=azulcito, opacity=0.1] (1.5,0) rectangle (4,0.8);
-% 					\draw [verdecito,decoration={brace,mirror,raise=0.5cm},decorate] (axis cs:0,0) -- (axis cs:4,0) node [pos=0.5,anchor=north,yshift=-0.55cm] {Cycle $\approx 1/\lambda$}; 
-% 					\draw [rojito,decoration={brace,raise=0.05cm},decorate] (axis cs:1.5,.8) -- (axis cs:4,0.8) node [pos=0.5,anchor=south,yshift=0.1cm] {$\mathbf{1}_{\{\eta(s)<x\}}$};
-% 				\end{axis}
-% 			\end{tikzpicture}
-% 		\end{column}
-% 	\end{columns}
-% 	\vfill
-% 	\begin{lemma}
-% 		If requests come from a Pareto($\alpha$) renewal process, with intensity $\lambda$, from the master equation:
-% 		\begin{equation*}
-% 			P(\lambda(0)\leqslant x) = \lambda E^0_{N}\left[\int_0^{\tau_1}\mathbf{1}_{\{\eta(s)\leqslant x\}}ds\right] = \left(\frac{\theta x}{\alpha}\right)^{\alpha-1}, \quad 0\leqslant x \leqslant \alpha/\theta,
-% 		\end{equation*}
-% 		with $\theta = (\alpha-1)/\lambda$.
-% 	\end{lemma}
-% \end{frame}
-
-	
-
 \begin{frame}{The threshold value in steady state}
 	
-	\begin{myitem}[1em]
-		\item Now we have $N$ independent renewal processes with intensities $\lambda_i(t)$.
-		\item At time $t=0$, we have a sample $\{X_1,\ldots,X_N\}$ of independent, but \textbf{not identically distributed} random variables, with distribution:
-		\begin{equation*}
-			X_i \sim \eta_i(-\tau_0^i), \quad -\tau_0\sim \hat{F}_i(t) 
-		\end{equation*}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{myitem}[1em]
+				\item Now we have $N$ independent renewal processes with intensities $\lambda_i(t)$.
+				\item At time $t=0$, we have a sample $\{X_1,\ldots,X_N\}$ of independent, but \textbf{not identically distributed} random variables, with distribution:
+				\begin{equation*}
+					X_i \sim \eta_i(-\tau_0^i), \quad -\tau_0\sim \hat{F}_i(t) 
+				\end{equation*}
 
-		\item The threshold $\theta(0)$ is the $C-$th \alert{order statistic} (in decreasing order) of the sample.
-	\end{myitem}
+				\item The threshold $\theta(0)$ is the $C-$th \alert{order statistic} (in decreasing order) of the sample.
+			\end{myitem}
+
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			
+			\begin{tikzpicture}
+				\begin{axis}[width=\textwidth]
+					\plot[domain=-1:0]{1/(x+1+1)};
+				\end{axis}
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}	
 	\vfill
-	\alert{Problem:} for non $iid$ random variables, no closed form $\to$ Can we say something about the large scale limit?
+	\pause
+
+	\alert{Problem:} non $iid$ $\to$ no closed form $\to$ Can we say something about the large scale limit?
 \end{frame}
 
 \begin{frame}{A useful Theorem}
