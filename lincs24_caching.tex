@@ -550,13 +550,13 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 		\begin{tabular}{m{4cm} m{6cm}}
 			\alert{Inter-arrival distribution:} & 
 					\begin{gather*}
-						F(t) := P^0_N (\tau_1 - \tau_0 \leqslant t), \quad
+						F_0(t) := P^0_\Phi (\tau_1 - \tau_0 \leqslant t), \quad
 						E^0_\Phi[\tau_1] = 1/\lambda.
 					\end{gather*} \\[-2em]
 					\uncover<2->{
 			\alert{Age distribution:} &
 					\begin{equation*}
-						\hat{F}(t) := P (- \tau_0 \leqslant t) = \lambda \int_0^t 1-F(s)ds,
+						F(t) := P (- \tau_0 \leqslant t) = \lambda \int_0^t 1-F(s)ds,
 					\end{equation*}}
 		\end{tabular}
 
@@ -682,11 +682,11 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 \begin{frame}{Renewal processes}
 
 	\begin{itemize}
-	\item Let now $\Phi$ be a \alert{stationary renewal process}, i.e. inter request times $\tau_{k+1}-\tau_k$ are $iid\sim F$.
+	\item Let now $\Phi$ be a \alert{stationary renewal process}, i.e. inter request times $\tau_{k+1}-\tau_k$ are $iid\sim F_0$.
 	
-	\item Assume that $F$ has a density, and define the \alert{hazard rate} of $F$ as:
+	\item Assume that $F_0$ has a density, and define the \alert{hazard rate} of $F$ as:
 	 \begin{equation*}
-		\eta(t) = \frac{f(t)}{1-F(t)}
+		\eta_0(t) = \frac{f_0(t)}{1-F_0(t)}
 	 \end{equation*}
 
 	\end{itemize}
@@ -694,7 +694,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	 \begin{theorem}[Daley-Vere Jones, Chapter 7]
 		For a renewal process and its natural history, the stochastic intensity is:
 		\begin{equation*}
-			\lambda(t) = \eta(t-\tau^-(t)),
+			\lambda(t) = \eta_0(t-\tau^-(t)),
 		\end{equation*}
 		where $\tau^-(t)$ is the last point before $t$:
 		\begin{equation*}
@@ -978,7 +978,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 \end{frame}
 
-\begin{frame}{Back to the Poisson case}
+\begin{frame}{The Poisson case}
 
 	\begin{myitem}
 		\item Assume the $\Phi_i$ are Poisson processes of intensities $\lambda_i$.
@@ -988,18 +988,18 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 		\begin{equation*}
 			\pi^*(t) \equiv \{1,\ldots,C\}
 		\end{equation*}
-		since $\lambda_i(t)\equiv \lambda_i$ and these are is decreasing.
+		since $\lambda_i(t)\equiv \lambda_i$ and these are decreasing.
 	\end{myitem}
 
 	\pause \vfill
-	\alert{Conclusion:} under Poisson arrivals, statically keeping the most popular objects is optimal (compare to the IRM before).
+	\alert{Conclusion:} under Poisson arrivals, statically keeping the most popular objects is optimal (as in IRM).
 \end{frame}
 
 \begin{frame}{The Renewal case}
 	\begin{myitem}[2em]
 		\item If now the $\Phi_i$ are renewal processes of (decreasing) intensities $\lambda_i$.
 		\item The total request process is no longer renewal, but its intensity is again $\sum_i\lambda_i$.
-		\item Since $\lambda_i(t) = \eta_i(t-T^*_i(t))$, the optimal policy is:
+		\item Since $\lambda_i(t) = \eta_i(t-T^-_i(t))$, the optimal policy is:
 		\vspace{1em}
 		\begin{itemize}
 			\item Keep track of the \alert{current hazard rate} of each content $i$.
@@ -1027,11 +1027,11 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\begin{myitem}[1em]
 		\item If instead hazard rates are \alert{increasing}, then when a request arrives, the item becomes less likely to be requested again! 
 		\item It may be better to remove it and make room for other ones (i.e. LRU makes no sense!).
-		\item If we haven't seen it for a while, then we may have to fetch it \alert{anticipating} the upcoming request.
+		\item If we haven't seen it for a while, we may have to fetch it \alert{anticipating} an upcoming request!
 	\end{myitem}
 \end{frame}
 
-\section{Large scale asymptotics}
+\section{Main result}
 
 \begin{frame}{Understanding the optimal policy}{The threshold process}
 	
@@ -1054,28 +1054,48 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 \begin{frame}{The threshold value in steady state}
 	
+	At time $t=0$, we have a sample $\{X_1,\ldots,X_N\}$ of independent, but \textbf{not identically distributed} random variables, with distribution:
+	
 	\begin{columns}
+		
 		\begin{column}{0.5\textwidth}
-			\begin{myitem}[1em]
-				\item Now we have $N$ independent renewal processes with intensities $\lambda_i(t)$.
-				\item At time $t=0$, we have a sample $\{X_1,\ldots,X_N\}$ of independent, but \textbf{not identically distributed} random variables, with distribution:
-				\begin{equation*}
-					X_i \sim \eta_i(-\tau_0^i), \quad -\tau_0\sim \hat{F}_i(t) 
-				\end{equation*}
-
-				\item The threshold $\theta(0)$ is the $C-$th \alert{order statistic} (in decreasing order) of the sample.
-			\end{myitem}
-
+			\begin{equation*}
+				X_i \sim \eta_i(-\tau_0^i), \quad -\tau_0\sim \hat{F}_i(t) 
+			\end{equation*}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			
 			\begin{tikzpicture}
-				\begin{axis}[width=\textwidth]
-					\plot[domain=-1:0]{1/(x+1+1)};
+				\begin{axis}[
+					width = 0.9\textwidth,
+					height = 0.6\textwidth,
+					xlabel=$t$,
+					ymin = -.6,
+					ymax = 2.1,
+					xmin = -2.2,
+					xmax=.5,
+					xlabel style = {at={(axis cs:.5,0)},anchor=north west},
+					y axis line style={draw=none},
+					x axis line style={->, thick},
+					ticks=none,
+					axis x line*=middle,
+				]
+				
+				\plot[domain=-2:0, very thick, color=azulcito]{2/(1+(x+2))} node[midway,anchor=south west] {\small $\eta_i(t-\tau_0^i)$};
+
+				\draw[azulcito, very thick] (axis cs:-2,0) -- (axis cs:-2,2);
+				\node[anchor=north] at (axis cs:-2,0) {\footnotesize $\tau_0^i$}; 
+				\draw[->, violetita, very thick] (axis cs:0,0) -- (axis cs:0,2/3) node[anchor=west] {$X_i$};
+				\node[anchor=north] at (axis cs:0,0) {\footnotesize $0$}; 
 				\end{axis}
 			\end{tikzpicture}
 		\end{column}
 	\end{columns}	
+
+	\vfill
+
+	The threshold $\theta(0)$ is the $C-$th \alert{order statistic} (in decreasing order) of the sample.
+	
 	\vfill
 	\pause
 
@@ -1105,7 +1125,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	
 	Assume now that the request processes come from a common scale family, i.e. their inter-arrival distributions satisfy:
 	\begin{equation*}
-		F_i(t) = F_0(\lambda_i t)
+		F_0^{(i)}(t) = F_0(\lambda_i t)
 	\end{equation*}
 	where $F_0$ has mean $1$, so $F_i$ has mean $1/\lambda_i$.
 
@@ -1113,8 +1133,8 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 	In this case:
 	\begin{myitem}[1em]
-		\item The distribution of $-\tau_0^i$ is $\hat{F}_i(t) = \hat{F}_0(\lambda_i t)$.
-		\item The hazard-rate of $F_i$ is $\eta_i(t) = \lambda_i \eta_0(t/\lambda_i)$.
+		\item The distribution of $-\tau_0^i$ is $F^{(i)}(t) = F(\lambda_i t)$.
+		\item The hazard-rate is $\eta_i(t) = \lambda_i \eta_0(t/\lambda_i)$.
 		\item The random variable $X_i\sim G_i(x):=G_0(x/\lambda_i)$
 	\end{myitem}
 	\vfill
@@ -1124,11 +1144,10 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 \begin{frame}{The distribution of popularities}
 	
-	Consider now the popularities $\lambda_1> \ldots > \lambda_N$ and define:
+	Consider now the popularities $\lambda_1> \ldots > \lambda_N$ and define their empirical measure:
 	\begin{equation*}
 		\phi_N(\lambda) = \frac{1}{N}\sum_{i=1}^N \ind{\{\lambda_i\leqslant \lambda\}}
 	\end{equation*}
-	their empirical (deterministic) distribution.
 
 	\pause \vfill
 	\alert{Assumption:}
@@ -1179,12 +1198,12 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 		 \item Note that:
 		 \begin{equation*}
-			\frac{1}{N} \sum_{i=1}^N G_i(x) = \sum_{i=1}^N G_0\left(\frac{x}{\lambda_i}\right) \frac{1}{N} = \int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi_M(d\lambda)
+			\frac{1}{N} \sum_{i=1}^N G_i(x) = \sum_{i=1}^N G_0\left(\frac{x}{\lambda_i}\right) \frac{1}{N} = \int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi_N(d\lambda)
 		 \end{equation*}
 
 		 \item Use the assumption to show that:
 		 \begin{equation*}
-			\int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi_M(d\lambda) \to_M \int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi(d\lambda) = G_\infty(x).
+			\int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi_N(d\lambda) \to_M \int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi(d\lambda) = G_\infty(x).
 		 \end{equation*}
 
 	\end{myitem}
@@ -1214,7 +1233,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\begin{center}
 		\includegraphics[width=0.65\textwidth]{figuras/simulation_example.pdf}
 
-		{\footnotesize $M=1000, C=100$. Pareto $\alpha=2$ requests, Zipf $\beta=0.5$  popularities.}
+		{\footnotesize $N=1000, C=100$. Pareto $\alpha=2$ requests, Zipf $\beta=0.5$  popularities.}
 	\end{center}
 \end{frame}
 
@@ -1225,7 +1244,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\begin{theorem}
 		Under all the above assumptions, the asymptotic \alert{miss rate} verifies:
 		\begin{equation*}
-			\lambda_{\text{miss},M} \to_M \int_0^\infty \lambda \tilde{G}_0\left(\frac{\theta^*}{\lambda}\right) \phi(d\lambda) = \E{\Lambda \tilde{G}_0\left(\frac{\theta^*}{\Lambda}\right)} 
+			\lambda_{\text{miss},N} \to_N \int_0^\infty \lambda \tilde{G}_0\left(\frac{\theta^*}{\lambda}\right) \phi(d\lambda) = \E{\Lambda \tilde{G}_0\left(\frac{\theta^*}{\Lambda}\right)} 
 		\end{equation*}
 		where $\Lambda \sim \phi$, and $\tilde{G}_0$ is the distribution of the hazard-rate prior to an arrival:
 		\begin{equation*}
@@ -1280,9 +1299,9 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 		For the following cases, the optimal timers are:
 
 		\begin{itemize}
-			\item Constant hazard rate (Poisson) or increasing hazard rate: keep the most popular objects ($T_i=\infty$ or $0$).
+			\item \alert{Increasing hazard rate}: keep the most popular objects ($T_i=\infty$ or $0$).
 			
-			\item Decreasing hazard rate:
+			\item \alert{Decreasing hazard rate:}
 			
 			\begin{equation*}
 				\eta_i (T_i^*) \geqslant \theta^*
@@ -1336,11 +1355,15 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 
 		In the scaling regime considered earlier, for renewal processes with DHR, the optimal TTL policy is also asymptotically optimal within the class of causal policies.
 	\end{theorem}
-	\vfill
+	\bigskip
 	\alert{Idea:} prove that the thresholds are the same in the limit.
 
 	\pause
+	\vfill
+
+	\begin{center}
 	But what about \alert{increasing hazard rates}?
+	\end{center}
 \end{frame}
 
 \begin{frame}{Back to increasing hazard rates...}
@@ -1565,7 +1588,8 @@ The question now is not \alert{how long we should remember something}, but inste
 		
 		\item The new \alert{timer based pre-fetching} policy is also asymptotically optimal in the IHR case. 
 		
-		\pause
+		\item Classical caching is not well-suited to regular traffic.
+		
 		\item There is much more to do!
 		
 	\end{myitem}
@@ -1578,9 +1602,13 @@ The question now is not \alert{how long we should remember something}, but inste
 	\vfill
 	Andres Ferragut
 
-	\href{mailto://ferragut@ort.edu.uy}{\alert{\texttt{ferragut@ort.edu.uy}}}
+	\smallskip
+
+	\href{mailto://ferragut@ort.edu.uy}{\alert{ferragut@ort.edu.uy}}
 	
-	\href{http://aferragu.github.io}{\alert{\texttt{aferragu.github.io}}}
+	\smallskip
+
+	\href{http://aferragu.github.io}{\alert{aferragu.github.io}}
 \end{frame}
 
 \end{document}
