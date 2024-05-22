@@ -519,7 +519,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\end{columns}
 	\pause \vfill
 
-	Let $\mathcal{F}_t = \sigma(N(s), s\leqslant t)$ be its \alert{internal history}.
+	Let $\mathcal{F}_t = \sigma(\Phi(s), s\leqslant t)$ be its \alert{internal history}.
 \end{frame}
 
 	\begin{frame}{Two important distributions:}
@@ -537,9 +537,9 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 				\draw[<-,very thick, azulcito] (4,.6) -- (4,0) node[below] {$\tau_{2}$};
 				\draw[-,thick] (0,-.1) node[below] {$0$} -- (0,0.1);
 				 
-				\draw[->, very thick, verdecito] (2,.3) -- node[midway, above, anchor=south] {$T\sim F$} (4,.3);
+				\draw[->, very thick, verdecito] (2,.3) -- node[midway, above, anchor=south] {$T_0\sim F_0$} (4,.3);
 		
-				\draw<2->[->, very thick, rojito] (0,.3) -- node[midway, above, anchor=south] {$\hat{T}\sim \hat{F}$} (-1.5,.3);
+				\draw<2->[->, very thick, rojito] (0,.3) -- node[midway, above, anchor=south] {$T\sim F$} (-1.5,.3);
 		
 			\end{tikzpicture}
 		
@@ -999,7 +999,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\begin{myitem}[2em]
 		\item If now the $\Phi_i$ are renewal processes of (decreasing) intensities $\lambda_i$.
 		\item The total request process is no longer renewal, but its intensity is again $\sum_i\lambda_i$.
-		\item Since $\lambda_i(t) = \eta_i(t-T^-_i(t))$, the optimal policy is:
+		\item Since $\lambda_i(t) = \eta_i(t-\tau^-_i(t))$, the optimal policy is:
 		\vspace{1em}
 		\begin{itemize}
 			\item Keep track of the \alert{current hazard rate} of each content $i$.
