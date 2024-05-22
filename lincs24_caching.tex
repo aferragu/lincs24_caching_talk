@@ -185,7 +185,7 @@
     \item Assume now that $Z_n$ are $iid$ with distribution $p_i = P(Z_n=i)$, where $p_i$ is the \alert{popularity} of content $i$. Wlog, we take $p_1\geqslant p_2 \geqslant \ldots$.
     \item In this case, $Z_n\mid \mathcal{F}_{n-1} \sim p$, thus the hit probability at time $n$ is:
     \begin{equation*}
-      P(Z_n \in \pi_n) = \E{\ind{Z_n\in\pi_n}} = \E{\E{\ind{Z_n\in \pi_n} \mid \mathcal{F}_{n-1}}} = \E{\sum_{i\in\pi_n} p_i} \leqslant \sum_{i=1}^C p_i
+      P(Z_n \in \pi_n) = \E{\ind{\{Z_n\in\pi_n\}}} = \E{\E{\ind{\{Z_n\in \pi_n\}} \mid \mathcal{F}_{n-1}}} = \E{\sum_{i\in\pi_n} p_i} \leqslant \sum_{i=1}^C p_i
     \end{equation*}
 
     \item Taking $\pi_n \equiv \{1,\ldots,C\}$ achieves the bound.
@@ -868,13 +868,13 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	
 	\begin{myitem}[1em]
 		\item Consider again a cache system fed by $N$ \alert{independent} request processes $\Phi_i(t)$ with stochastic intensities $\lambda_i(t)$.
-		\item Let $\mathcal{F}_t = \sigma(\{\mathcal{F}_t^{(i)}: i=1,\ldots,M\})$ their aggregate history.
+		\item Let $\mathcal{F}_t = \sigma(\{\mathcal{F}_t^{(i)}: i=1,\ldots,N\})$ their aggregate history.
 	\end{myitem}
 
 	\vfill
 
 	\begin{block}{Definition}
-		A \alert{causal} caching policy is an $\mathcal{F}_t$ \alert{predictable} stochastic process
+		A \alert{causal} caching policy is an $\mathcal{F}_t-$\alert{predictable} stochastic process
 		\begin{equation*}
 			\pi(t):\Omega\times\mathbb{R} \to \mathcal{C}
 		\end{equation*}
@@ -1179,7 +1179,7 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 \begin{frame}{Main result}
 
 	\begin{theorem}[Carrasco,F',Paganini]
-		Consider a caching system fed by $N$ independent and stationary renewal processes, with intensities $\{\lambda_i\}$, and inter-arrival distributions $F_i(t)=F_0(\lambda_i t)$. Let $X_1,\ldots,X_N$ denote the observed hazard-rates at time $0$. Then, under the preceding assumption, the empirical distribution:
+		Consider a caching system fed by $N$ independent and stationary renewal processes, with intensities $\{\lambda_i\}$, and inter-arrival distributions $F^{i}_0(t)=F_0(\lambda_i t)$. Let $X_1,\ldots,X_N$ denote the observed hazard-rates at time $0$. Then, under the preceding assumption, the empirical distribution:
 		\begin{equation*}
 			\hat{G}_N(x) = \frac{1}{N}\sum_{i=1}^N \ind{\{X_i\leqslant x\}} \to_N G_\infty(x) = \int_0^\infty G_0\left(\frac{x}{\lambda}\right) \phi(d\lambda)
 		\end{equation*}
@@ -1281,11 +1281,11 @@ If inter-request times are \alert{heavy tailed}, this can model burstiness.
 	\begin{problem}[Optimal TTL policy]
 		Choose timers $T_i\geqslant 0$ such that:
 		\begin{equation*}
-			\max_{T_i\geqslant 0} \sum_i \lambda_i F_i(T_i)
+			\max_{T_i\geqslant 0} \sum_i \lambda_i F^{(i)}_0 (T_i)
 		\end{equation*}
 		subject to:
 		\begin{equation*}
-			\sum_i \hat{F}_i(T_i) \leqslant C
+			\sum_i F^{(i)}(T_i) \leqslant C
 		\end{equation*}
 	\end{problem}
 
@@ -1513,11 +1513,11 @@ The question now is not \alert{how long we should remember something}, but inste
 	\begin{problem}[Optimal pre-fetching policy]
 		Choose timers $T_i\geqslant 0$ such that:
 		\begin{equation*}
-			\max_{T_i\geqslant 0} \sum_i \lambda_i (1-F_i(T_i))
+			\max_{T_i\geqslant 0} \sum_i \lambda_i (1-F_0^{(i)}(T_i))
 		\end{equation*}
 		subject to:
 		\begin{equation*}
-			\sum_i (1-\hat{F}_i(T_i)) \leqslant C
+			\sum_i (1-F^{(i)}_i(T_i)) \leqslant C
 		\end{equation*}
 	\end{problem}
 	}
@@ -1525,11 +1525,11 @@ The question now is not \alert{how long we should remember something}, but inste
 		\begin{problem}[Optimal pre-fetching policy]
 			Choose timers $T_i\geqslant 0$ such that:
 			\begin{equation*}
-				\min_{T_i\geqslant 0} \sum_i \lambda_i F_i(T_i)
+				\min_{T_i\geqslant 0} \sum_i \lambda_i F_0^{(i)}(T_i)
 			\end{equation*}
 			subject to:
 			\begin{equation*}
-				\sum_i \hat{F}_i(T_i) \geqslant N-C
+				\sum_i \hat{F}^{(i)}(T_i) \geqslant N-C
 			\end{equation*}
 		\end{problem}		
 	}
